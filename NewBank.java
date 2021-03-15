@@ -42,6 +42,12 @@ public class NewBank {
 		if(customers.containsKey(customer.getKey())) {
 			switch(request) {
 			case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
+			case "NEWACCOUNT Current" :
+				Account account = new Account("Current", 0);
+				return newAccount(customer, account);
+			case "NEWACCOUNT Savings" :
+				account = new Account("Savings", 0);
+				return newAccount(customer, account);
 			default : return "FAIL";
 			}
 		}
@@ -52,4 +58,8 @@ public class NewBank {
 		return (customers.get(customer.getKey())).accountsToString();
 	}
 
+	private String newAccount(CustomerID customer, Account account) {
+		customers.get(customer.getKey()).addAccount(account);
+		return "SUCCESS";
+	}
 }
