@@ -40,7 +40,7 @@ public class NewBank {
 
 	// commands from the NewBank customer are processed in this method
 	public synchronized String processRequest(CustomerID customer, String request) {
-		String[] splitted = new String[1];
+		String[] splitted = new String[3];
 		try {
 			splitted = request.split(" ");
 		}catch(ArrayIndexOutOfBoundsException e){
@@ -53,10 +53,12 @@ public class NewBank {
 				if(splitted.length==2) {
 					Account account = new Account(splitted[1], 0);
 					return newAccount(customer, account);
-				}else{
+				}else if (splitted.length==3){
 					double amount = Double.parseDouble(splitted[2]);
 					Account account = new Account(splitted[1], amount);
 					return newAccount(customer, account);
+				}else{
+					return "FAIL";
 				}
 			default : return "FAIL";
 			}
