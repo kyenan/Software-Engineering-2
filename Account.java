@@ -2,7 +2,7 @@ package newbank.server;
 
 public class Account {
 	
-	private String accountName;
+	public String accountName;
 	private double openingBalance;
 
 	public Account(String accountName, double openingBalance) {

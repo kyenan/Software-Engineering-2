@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Customer {
 	
-	private ArrayList<Account> accounts;
+	public ArrayList<Account> accounts;
 	
 	public Customer() {
 		accounts = new ArrayList<>();
@@ -20,5 +20,14 @@ public class Customer {
 
 	public void addAccount(Account account) {
 		accounts.add(account);		
+	}
+
+	public boolean checkDupeAccount(Account account){
+		for (Account a : accounts){
+			if (a.accountName.equals(account.accountName)){
+				return true;
+			}
+		}
+		return false;
 	}
 }

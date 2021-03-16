@@ -1,6 +1,7 @@
 package newbank.server;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class NewBank {
 	
@@ -39,15 +40,24 @@ public class NewBank {
 
 	// commands from the NewBank customer are processed in this method
 	public synchronized String processRequest(CustomerID customer, String request) {
+		String[] splitted = new String[1];
+		try {
+			splitted = request.split(" ");
+		}catch(ArrayIndexOutOfBoundsException e){
+			splitted[0]=request;
+		}
 		if(customers.containsKey(customer.getKey())) {
-			switch(request) {
+			switch(splitted[0]) {
 			case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
-			case "NEWACCOUNT Current" :
-				Account account = new Account("Current", 0);
-				return newAccount(customer, account);
-			case "NEWACCOUNT Savings" :
-				account = new Account("Savings", 0);
-				return newAccount(customer, account);
+			case "NEWACCOUNT" :
+				if(splitted.length==2) {
+					Account account = new Account(splitted[1], 0);
+					return newAccount(customer, account);
+				}else{
+					double amount = Double.parseDouble(splitted[2]);
+					Account account = new Account(splitted[1], amount);
+					return newAccount(customer, account);
+				}
 			default : return "FAIL";
 			}
 		}
@@ -59,6 +69,9 @@ public class NewBank {
 	}
 
 	private String newAccount(CustomerID customer, Account account) {
+		if (customers.get(customer.getKey()).checkDupeAccount(account)){
+			return "FAIL";
+		}
 		customers.get(customer.getKey()).addAccount(account);
 		return "SUCCESS";
 	}
