@@ -1,0 +1,12 @@
+Week 2 closing meeting:
+- going over the submitted code for new account and pulling
+- going over the submitted code for transfers and payments and pulling
+
+Assigning new roles for week 3:
+- Scrum master: B
+- Product Owner: C
+- Scrum team: A & D
+
+Sprint backlog for week 3:
+- the system shall be able to move specific amount between accounts/customers
+- the system shall be able to send money to a person/company 
