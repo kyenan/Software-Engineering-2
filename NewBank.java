@@ -1,12 +1,14 @@
 package newbank.server;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class NewBank {
 	
 	private static final NewBank bank = new NewBank();
 	private HashMap<String,Customer> customers;
-	
+
 	private NewBank() {
 		customers = new HashMap<>();
 		addTestData();
@@ -39,9 +41,40 @@ public class NewBank {
 
 	// commands from the NewBank customer are processed in this method
 	public synchronized String processRequest(CustomerID customer, String request) {
+		String[] splitted = new String[3];
+		try {
+			splitted = request.split(" ");
+		}catch(ArrayIndexOutOfBoundsException e){
+			splitted[0]=request;
+		}
 		if(customers.containsKey(customer.getKey())) {
-			switch(request) {
+			switch(splitted[0]) {
 			case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
+			case "NEWACCOUNT" :
+				if(splitted.length==2) {
+					try{
+						Double.parseDouble(splitted[1]);
+						return"FAIL";
+					}catch(NumberFormatException n){
+						if(validAccType(splitted[1])) {
+							Account account = new Account(splitted[1], 0);
+							return newAccount(customer, account);
+						}else{
+							return"FAIL";
+						}
+					}
+				}else if (splitted.length==3){
+					double amount;
+					try {
+						amount = Double.parseDouble(splitted[2]);
+					}catch(NumberFormatException n){
+						return "FAIL";
+					}
+					Account account = new Account(splitted[1], amount);
+					return newAccount(customer, account);
+				}else{
+					return "FAIL";
+				}
 			default : return "FAIL";
 			}
 		}
@@ -52,4 +85,19 @@ public class NewBank {
 		return (customers.get(customer.getKey())).accountsToString();
 	}
 
+	private String newAccount(CustomerID customer, Account account) {
+		if (customers.get(customer.getKey()).checkDupeAccount(account)){
+			return "FAIL";
+		}
+		customers.get(customer.getKey()).addAccount(account);
+		return "SUCCESS";
+	}
+
+	private boolean validAccType(String str){
+
+		if(Arrays.asList("Main","Current","Savings","Checking").contains(str)){
+			return true;
+		}
+		return false;
+	}
 }
