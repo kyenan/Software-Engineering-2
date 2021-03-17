@@ -51,10 +51,20 @@ public class NewBank {
 			case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
 			case "NEWACCOUNT" :
 				if(splitted.length==2) {
-					Account account = new Account(splitted[1], 0);
-					return newAccount(customer, account);
+					try{
+						Double.parseDouble(splitted[1]);
+						return"FAIL";
+					}catch(NumberFormatException n){
+						Account account = new Account(splitted[1], 0);
+						return newAccount(customer, account);
+					}
 				}else if (splitted.length==3){
-					double amount = Double.parseDouble(splitted[2]);
+					double amount;
+					try {
+						amount = Double.parseDouble(splitted[2]);
+					}catch(NumberFormatException n){
+						return "FAIL";
+					}
 					Account account = new Account(splitted[1], amount);
 					return newAccount(customer, account);
 				}else{
