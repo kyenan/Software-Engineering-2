@@ -1,5 +1,6 @@
 package newbank.server;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -7,7 +8,7 @@ public class NewBank {
 	
 	private static final NewBank bank = new NewBank();
 	private HashMap<String,Customer> customers;
-	
+
 	private NewBank() {
 		customers = new HashMap<>();
 		addTestData();
@@ -55,8 +56,12 @@ public class NewBank {
 						Double.parseDouble(splitted[1]);
 						return"FAIL";
 					}catch(NumberFormatException n){
-						Account account = new Account(splitted[1], 0);
-						return newAccount(customer, account);
+						if(validAccType(splitted[1])) {
+							Account account = new Account(splitted[1], 0);
+							return newAccount(customer, account);
+						}else{
+							return"FAIL";
+						}
 					}
 				}else if (splitted.length==3){
 					double amount;
@@ -86,5 +91,13 @@ public class NewBank {
 		}
 		customers.get(customer.getKey()).addAccount(account);
 		return "SUCCESS";
+	}
+
+	private boolean validAccType(String str){
+
+		if(Arrays.asList("Main","Current","Savings","Checking").contains(str)){
+			return true;
+		}
+		return false;
 	}
 }
