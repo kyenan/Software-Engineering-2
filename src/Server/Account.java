@@ -1,15 +1,34 @@
 public class Account {
 	
-	public String accountName;
-	private double openingBalance;
+	private String accountName;
+	private   double balance;
 
-	public Account(String accountName, double openingBalance) {
+	public String getAccountName() {
+		return accountName;
+	}
+
+	public void setAccountName(String accountName) {
 		this.accountName = accountName;
-		this.openingBalance = openingBalance;
+	}
+
+	public double getOpeningBalance() {
+		return balance;
+	}
+
+	public void setOpeningBalance(double balance) {
+		this.balance = balance;
+	}
+
+	public void addMoney (double amount) {
+		this.balance += amount;
+	}
+	public Account(String accountName, double balance) {
+		this.accountName = accountName;
+		this.balance = balance;
 	}
 	
 	public String toString() {
-		return (accountName + ": " + openingBalance);
+		return (accountName + ": " + balance);
 	}
 
 }

@@ -3,7 +3,15 @@ import java.util.ArrayList;
 public class Customer {
 	
 	public ArrayList<Account> accounts;
-	
+
+	public ArrayList<Account> getAccounts() {
+		return accounts;
+	}
+
+	public void setAccounts(ArrayList<Account> accounts) {
+		this.accounts = accounts;
+	}
+
 	public Customer() {
 		accounts = new ArrayList<>();
 	}
@@ -22,7 +30,7 @@ public class Customer {
 
 	public boolean checkDupeAccount(Account account){
 		for (Account a : accounts){
-			if (a.accountName.equals(account.accountName)){
+			if (a.getAccountName().equals(account.getAccountName())){
 				return true;
 			}
 		}
