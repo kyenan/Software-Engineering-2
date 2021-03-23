@@ -2,11 +2,11 @@ package newbank.server;
 
 public class Account {
 	
-	private String accountName;
-	private double openingBalance;
-	private double currentBalance;
-	private double amount;
-	private String payee;
+	public accountName;
+	public double openingBalance;
+	public double currentBalance;
+	public double amount;
+	public String payee;
 
 
 	//constructor
@@ -54,17 +54,16 @@ public class Account {
 	}
 
 	// set external payee
-	private void setPayee(String Payee){
+	public setPayee(String Payee){
 		this.payee = Payee;
 	}
 	// set amount for external payment
-	private void setAmount(Double Amount){
+	public setAmount(Double Amount){
 		this.amount = Amount;
 	}
 
 	// make payment to external payee, deduct money transferred from account balance
-	public void externalTransferOut(String accountName, String Payee, double Amount){
-
+	public (accountName,  Payee, double Amount){
 		this.accountName = accountName;
 		setPayee(Payee);
 		setAmount(Amount);
