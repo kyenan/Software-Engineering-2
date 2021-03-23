@@ -6,15 +6,21 @@ public class NewBank {
 	
 	private static final NewBank bank = new NewBank();
 	private HashMap<String,Customer> customers;
+
+
 	
 	private NewBank() {
 		customers = new HashMap<>();
 		addTestData();
+
 	}
 	
 	private void addTestData() {
 		Customer bhagy = new Customer();
 		bhagy.addAccount(new Account("Main", 1000.0));
+		bhagy.addAccount(new Account("Savings", 500.0));
+		Account a = new Account();
+		a.Transfer(100, "Main", "Savings");
 		customers.put("Bhagy", bhagy);
 		
 		Customer christina = new Customer();
@@ -24,6 +30,8 @@ public class NewBank {
 		Customer john = new Customer();
 		john.addAccount(new Account("Checking", 250.0));
 		customers.put("John", john);
+
+
 	}
 	
 	public static NewBank getBank() {
@@ -42,8 +50,12 @@ public class NewBank {
 		if(customers.containsKey(customer.getKey())) {
 			switch(request) {
 			case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
+		//	case "MOVE" : return Move();
+		//		case "PAY"	: return Pay();
 			default : return "FAIL";
 			}
+
+
 		}
 		return "FAIL";
 	}
@@ -51,5 +63,21 @@ public class NewBank {
 	private String showMyAccounts(CustomerID customer) {
 		return (customers.get(customer.getKey())).accountsToString();
 	}
+
+	/*
+	private Boolean Move () {
+		return (customers.get(customer.getKey())).accountsToString();
+	}
+	 */
+
+	/*
+
+	private boolean Pay(){
+
+	}
+
+	 */
+
+
 
 }
